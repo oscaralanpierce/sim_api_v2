@@ -1,0 +1,30 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  - package-ecosystem: "bundler"
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "daily"
+      timezone: "Australia/Sydney"
+    commit-message:
+      prefix: "[Dependabot]"
+      include: "scope"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "oscaralanpierce"
+    versioning-strategy: "increase"
+    ignore:
+      # Framework updates should be by humans
+      - dependency-name: "rails"
+
+      # Rubocop packages need to be updated together, often when
+      # Ruby or Rails have been updated
+      - dependency-name: "rubocop"
+      - dependency-name: "rubocop-rails"
+      - dependency-name: "rubocop-rspec"
+      - dependency-name: "rubocop-performance"
+      - dependency-name: "rubocop-factory_bot"

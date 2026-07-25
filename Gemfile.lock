@@ -237,6 +237,9 @@ GEM
     rubocop-ast (1.50.0)
       parser (>= 3.3.7.2)
       prism (~> 1.7)
+    rubocop-factory_bot (2.28.0)
+      lint_roller (~> 1.1)
+      rubocop (~> 1.72, >= 1.72.1)
     rubocop-performance (1.26.1)
       lint_roller (~> 1.1)
       rubocop (>= 1.75.0, < 2.0)
@@ -279,15 +282,16 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  bootsnap
-  debug
+  bootsnap (~> 1.24)
+  debug (~> 1.11.1)
   pg (~> 1.1)
   puma (>= 5.0)
   rack-cors (~> 3.0.0)
   rails (~> 8.1.3)
   rspec-rails (~> 8.0.4)
+  rubocop-factory_bot (~> 2.28.0)
   rubocop-performance (~> 1.26.1)
-  rubocop-rails-omakase
+  rubocop-rails-omakase (~> 1.1.0)
   rubocop-rspec (~> 3.10.2)
 
 CHECKSUMS
@@ -371,6 +375,7 @@ CHECKSUMS
   rspec-support (3.13.7) sha256=0640e5570872aafefd79867901deeeeb40b0c9875a36b983d85f54fb7381c47c
   rubocop (1.88.2) sha256=8def251c90cd955feb4daa3edc0ab56893250c4ce90ef81e6c80c03f9a939bbf
   rubocop-ast (1.50.0) sha256=b9ca88300da0803ee222ad20cdb30494c0a784eed06fdc35d254b06d662788db
+  rubocop-factory_bot (2.28.0) sha256=4b17fc02124444173317e131759d195b0d762844a71a29fe8139c1105d92f0cb
   rubocop-performance (1.26.1) sha256=cd19b936ff196df85829d264b522fd4f98b6c89ad271fa52744a8c11b8f71834
   rubocop-rails (2.36.0) sha256=105a5f5b0001ff2ef28a3af90da50862464e0775e8d0016d599079c0ca408bdb
   rubocop-rails-omakase (1.1.0) sha256=2af73ac8ee5852de2919abbd2618af9c15c19b512c4cfc1f9a5d3b6ef009109d

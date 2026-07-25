@@ -1,0 +1,56 @@
+name: Skyrim Inventory Management CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  runner-job:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_USERNAME: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v6
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+        env:
+          ImageOS: ubuntu20
+      - name: Set up database
+        run: |
+          cp config/database.github-actions.yml config/database.yml
+          bundle exec rails db:create
+          bundle exec rails db:schema:load
+      - name: Run Rubocop
+        run: bundle exec rails rubocop
+      - name: Run RSpec
+        run: |
+          bundle exec rails db:test:prepare
+          bundle exec rails spec
+        env:
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}

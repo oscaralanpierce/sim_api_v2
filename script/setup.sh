@@ -10,9 +10,9 @@ bundle install
 # step of this script by Bundler.
 #
 # The `rails db:setup` command, per the ActiveRecord docs,
-# creates the databases (skyrim_inventory_management_development
-# and skyrim_inventory_management_test), loads the schema,
-# and initialises them with seed data.
+# creates the databases (sim_api_v2_development and
+# sim_api_v2_test), loads the schema, and initialises them
+# with seed data.
 echo "+++ Setting up development and test databases......."
 bundle exec rails db:setup
 

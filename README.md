@@ -31,9 +31,14 @@ The Skyrim Inventory Management V2 API is a basic Rails API running on Rails 8 a
 You can set up your dev environment by cloning the repo, `cd`ing into the directory, and running:
 
 ```
-bundle install
-bundle exec rails db:setup
+./script/setup.sh
 ```
+
+This script:
+
+- Installs dependencies (including Bundler)
+- Sets up the database
+- Installs the Rubocop pre-commit hook to run before each Git commit
 
 You will also need to create a `config/master.key` file with the value of "SIM V2 RAILS_MASTER_KEY" in 1Password. If you don't have the password manager you probably aren't authorised to do this. (Use of the source code for your own project is authorised subject to the terms of the [Hippocratic License](https://firstdonoharm.dev).)
 
@@ -80,6 +85,12 @@ Unfortunately, this runs against every file in the repo, not just changed files,
 
 ```bash
 bundle exec rubocop -A file1.rb file2.rb directory1 directory2
+```
+
+You can also use the Rubocop script in this repo to run against staged changes. This script is automatically run in a pre-commit hook, but has the disadvantage that autocorrected files are not automatically added to the commit, causing the commit to simply be rejected if Rubocop fails. For that reason, if you have doubts that Rubocop will pass, it's best to run the script manually against staged changes before you attempt to commit:
+
+```bash
+./script/run_rubocop.sh
 ```
 
 ### Workflows

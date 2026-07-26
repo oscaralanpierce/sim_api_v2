@@ -1090,6 +1090,7 @@ Style/MethodCallWithArgsParentheses:
     - render
     - select
     - head
+    # RSpec methods
     - describe
     - context
     - it
@@ -1101,6 +1102,10 @@ Style/MethodCallWithArgsParentheses:
     - expect_with
     - mock_with
     - filter_run_when_matching
+    # ActiveRecord migration methods
+    - create_table
+    - string
+    - add_index
 Style/MethodCallWithoutArgsParentheses:
   Enabled: true
 Style/MethodDefParentheses:

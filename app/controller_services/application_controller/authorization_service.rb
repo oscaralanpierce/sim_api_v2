@@ -38,9 +38,9 @@ class ApplicationController < ActionController::API
       )
     end
 
-    def jwks_loader(options)
-      @cached_keys = nil if options[:kid_not_found]
-      @jwks_loader ||= JWT::JWK::Set.new(google_jwks)
+    def jwks(options)
+      @jwks = nil if options[:kid_not_found]
+      @jwks ||= JWT::JWK::Set.new(google_jwks)
     end
 
     def validate_token!
@@ -49,7 +49,7 @@ class ApplicationController < ActionController::API
         nil,
         true,
         algorithms: JWT_ALG,
-        jwks: ->(options) { jwks_loader(options) },
+        jwks: ->(options) { jwks(options) },
         iss: "https://securetoken.google.com/#{FIREBASE_PROJECT_ID}",
         verify_iss: true,
         aud: FIREBASE_PROJECT_ID,

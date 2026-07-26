@@ -1,0 +1,8 @@
+{
+  "sub": "somestring",
+  "user_id": "somestring",
+  "email": "someuser@gmail.com",
+  "email_verified": true,
+  "name": "Jane Doe",
+  "picture": "https://lh3.googleusercontent.com/a/userprofilephotourl"
+}

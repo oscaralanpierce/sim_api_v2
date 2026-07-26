@@ -41,4 +41,7 @@ group :development, :test do
 
   # User factory_bot factories for test data
   gem 'factory_bot_rails', '~> 6.5.1'
+
+  # Use Database Cleaner to truncate the database between test runs
+  gem 'database_cleaner-active_record', '~> 2.2.2'
 end

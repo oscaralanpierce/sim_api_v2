@@ -1,0 +1,5 @@
+# Google Auth
+
+Skyrim Inventory Management handles authentication and authorization exclusively through Google. On the back end, API requests are authenticated in the `ApplicationController` by the `ApplicationController::AuthorizationService`. If authorization succeeds and a matching user is able to be found or created in the database, that user is set as `current_user` in the controller for that request and is then able to access their own resources.
+
+The actual login flow takes place on the front end. When the front end sends a request with an `Authorization` header, the bearer token is decoded as a JWT using Google's public key as described in the [Firebase docs](https://firebase.google.com/docs/auth/admin/verify-id-tokens#web). Since there is no Firebase SDK for Ruby, this is done using Faraday to fetch public keys and the Ruby `jwt` library to decode the token. Unlike previous versions of Google authentication, which involved an API call to Google to verify token validity and retrieve profile data, now all profile data is present on the JWT sent with the `Authorization` header.

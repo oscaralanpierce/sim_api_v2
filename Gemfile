@@ -18,6 +18,9 @@ gem 'bootsnap', '~> 1.24', require: false
 # the Google auth API
 gem 'jwt', '~> 3.2.0'
 
+# Use Faraday to make third-party API calls
+gem 'faraday', '~> 2.14.3'
+
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 gem 'rack-cors', '~> 3.0.0'
 

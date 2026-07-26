@@ -30,9 +30,18 @@ group :development, :test do
   # Use rubocop-rspec for linting tests
   gem 'rubocop-rspec', '~> 3.10.2'
 
+  # Use rubocop-rspec_rails for more specific linting rules
+  gem 'rubocop-rspec_rails', '2.32.0'
+
   # Use rubocop-factory_bot for linting factories
   gem 'rubocop-factory_bot', '~> 2.28.0'
 
   # Test with RSpec
   gem 'rspec-rails', '~> 8.0.4'
+
+  # User factory_bot factories for test data
+  gem 'factory_bot_rails', '~> 6.5.1'
+
+  # Use Database Cleaner to truncate the database between test runs
+  gem 'database_cleaner-active_record', '~> 2.2.2'
 end

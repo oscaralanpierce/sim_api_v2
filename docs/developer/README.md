@@ -4,4 +4,5 @@ This directory contains documentation on V2 API development, including architect
 
 ## Table of Contents
 
+- [Google Auth](/docs/developer/google-auth.md)
 - [Controller Services](/docs/developer/controller-services.md)

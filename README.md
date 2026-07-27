@@ -1,4 +1,4 @@
-# Skyrim Inventory Management API V2
+# Skyrim Inventory Management API V2 [![Hippocratic License HL3-FULL](https://img.shields.io/static/v1?label=Hippocratic%20License&message=HL3-FULL&labelColor=5e2751&color=bc8c3d)](https://firstdonoharm.dev/version/3/0/full.html)
 
 Skyrim Inventory Management V2 is a fully-featured, distributed-stack Rails/React app facilitating inventory management, procurement, and logistics for Skyrim. The backend API is found in this repo.
 

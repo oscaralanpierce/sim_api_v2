@@ -19,8 +19,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_27_131240) do
     t.string "description"
     t.string "name", null: false
     t.datetime "updated_at", null: false
-    t.bigint "users_id", null: false
-    t.index ["users_id"], name: "index_playthroughs_on_users_id"
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_playthroughs_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -34,5 +34,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_27_131240) do
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
 
-  add_foreign_key "playthroughs", "users", column: "users_id"
+  add_foreign_key "playthroughs", "users"
 end

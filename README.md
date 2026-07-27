@@ -105,8 +105,8 @@ Rubocop and RSpec are run against the `main` branch and all pull requests agains
 
 ### Deployment
 
-TODO
+The SIM V2 API is deployed to [Render](https://render.com) via GitHub Actions. In case of an emergency where GitHub Actions is unavailable, we are able to deploy manually using the deploy hook configured in Render. This is stored in 1Password and, if I want you to have access to it, you will. Alternatively, you can use the "Manual Deploy" link in the Render console under the project `sim_api_v2`.
 
 ### Troubleshooting in Production
 
-TODO
+Render offers SSH access to troubleshoot production issues. More information is available in the [Render docs](https://render.com/docs/ssh).

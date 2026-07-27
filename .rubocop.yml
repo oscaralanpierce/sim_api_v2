@@ -1106,6 +1106,7 @@ Style/MethodCallWithArgsParentheses:
     # ActiveRecord migration methods
     - create_table
     - string
+    - references
     - add_index
 Style/MethodCallWithoutArgsParentheses:
   Enabled: true

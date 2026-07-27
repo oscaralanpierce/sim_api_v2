@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_26_021637) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_27_131240) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "playthroughs", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "description"
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "users_id", null: false
+    t.index ["users_id"], name: "index_playthroughs_on_users_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -24,4 +33,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_26_021637) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
+
+  add_foreign_key "playthroughs", "users", column: "users_id"
 end

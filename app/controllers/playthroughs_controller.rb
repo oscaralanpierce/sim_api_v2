@@ -3,6 +3,12 @@
 require 'controller/response'
 
 class PlaythroughsController < ApplicationController
+  def index
+    result = IndexService.new(current_user).perform
+
+    ::Controller::Response.new(self, result).execute
+  end
+
   def create
     result = CreateService.new(current_user, playthrough_params).perform
 

@@ -103,6 +103,12 @@ RSpec.describe Playthrough, type: :model do
 
           expect(playthrough.name).to eq('My Playthrough 1')
         end
+
+        it 'replaces an all-whitespace name' do
+          playthrough = described_class.create!(user: create(:user), name: '   ')
+
+          expect(playthrough.name).to eq('My Playthrough 1')
+        end
       end
     end
   end

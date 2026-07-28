@@ -110,3 +110,7 @@ The SIM V2 API is deployed to [Render](https://render.com) via GitHub Actions. I
 ### Troubleshooting in Production
 
 Render offers SSH access to troubleshoot production issues. More information is available in the [Render docs](https://render.com/docs/ssh).
+
+## License
+
+Skyrim Inventory Management is proudly licensed under the [Hippocratic License](https://firstdonoharm.dev). This open-source license restricts use of source code by organizations or users whose usage maintainers consider unethical. This project uses the full (most restrictive) version of the license, with provisions on ecocide, human trafficking and slavery, genocide, mass surveillance, and other unethical activities.

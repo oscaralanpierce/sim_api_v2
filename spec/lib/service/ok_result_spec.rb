@@ -3,17 +3,13 @@
 require 'service/ok_result'
 
 RSpec.describe Service::OkResult do
-  subject(:result) { described_class.new(options) }
+  subject(:result) { described_class.new(resource) }
 
-  let(:options) do
-    {
-      resource: { foo: 'bar' },
-    }
-  end
+  let(:resource) { { foo: 'bar' } }
 
   describe '#resource' do
     it 'is set to the resource passed in' do
-      expect(result.resource).to eq({ foo: 'bar' })
+      expect(result.resource).to eq(resource)
     end
   end
 

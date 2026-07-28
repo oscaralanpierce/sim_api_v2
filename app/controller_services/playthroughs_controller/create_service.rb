@@ -18,7 +18,7 @@ class PlaythroughsController < ApplicationController
       playthrough = user.playthroughs.new(params)
 
       if playthrough.save
-        Service::CreatedResult.new(resource: playthrough)
+        Service::CreatedResult.new(playthrough)
       else
         Service::UnprocessableEntityResult.new(errors: playthrough.errors_array)
       end

@@ -3,9 +3,11 @@
 require 'service/no_content_result'
 
 RSpec.describe Service::NoContentResult do
-  subject(:result) { described_class.new(options) }
+  subject(:result) { described_class.new('something') }
 
-  let(:options) { {} }
+  it "doesn't set a resource" do
+    expect(result.resource).to be_nil
+  end
 
   describe '#status' do
     it 'is :no_content' do

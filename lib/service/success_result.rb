@@ -4,8 +4,8 @@ module Service
   class SuccessResult
     attr_reader :resource
 
-    def initialize(options = {})
-      @resource = options[:resource]
+    def initialize(resource = nil)
+      @resource = resource
     end
 
     def status

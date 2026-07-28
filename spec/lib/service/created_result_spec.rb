@@ -3,9 +3,7 @@
 require 'service/created_result'
 
 RSpec.describe Service::CreatedResult do
-  subject(:result) { described_class.new(options) }
-
-  let(:options) { { resource: { somevalue: 'value' } } }
+  subject(:result) { described_class.new('something') }
 
   describe '#status' do
     it 'is :created' do

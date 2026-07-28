@@ -14,7 +14,7 @@ RSpec.describe Controller::Response do
     context 'when the result has no resource and errors are empty' do
       let(:controller) { instance_double(TestController, head: nil) }
       let(:options) { {} }
-      let(:result) { Service::NoContentResult.new(resource: nil) }
+      let(:result) { Service::NoContentResult.new }
 
       it 'returns the status with no response body' do
         execute
@@ -25,7 +25,7 @@ RSpec.describe Controller::Response do
     context 'when the resource is present but empty' do
       let(:controller) { instance_double(TestController, render: nil) }
       let(:options) { {} }
-      let(:result) { Service::OkResult.new(resource: []) }
+      let(:result) { Service::OkResult.new([]) }
 
       it 'returns the empty resource' do
         execute
@@ -36,7 +36,7 @@ RSpec.describe Controller::Response do
     context 'when there is a resource' do
       let(:controller) { instance_double(TestController, render: nil) }
       let(:options) { {} }
-      let(:result) { Service::OkResult.new(resource:) }
+      let(:result) { Service::OkResult.new(resource) }
 
       let(:resource) do
         {

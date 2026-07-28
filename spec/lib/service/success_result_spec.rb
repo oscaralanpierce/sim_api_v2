@@ -4,7 +4,7 @@ require 'service/success_result'
 
 RSpec.describe Service::SuccessResult do
   it 'includes the resource passed in' do
-    result = described_class.new(resource: 'foo')
+    result = described_class.new('foo')
 
     expect(result.resource).to eq('foo')
   end

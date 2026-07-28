@@ -35,7 +35,7 @@ class PlaythroughsController < ApplicationController
     def log_and_return_unauthorized
       Rails.logger.error('Unexpected state: PlaythroughsController::CreateService called with no logged-in user')
 
-      Service::UnauthorizedResult.new({ error: 'Authorization failed' })
+      Service::UnauthorizedResult.new
     end
   end
 end

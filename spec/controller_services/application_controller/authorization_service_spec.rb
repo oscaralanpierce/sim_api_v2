@@ -95,8 +95,8 @@ RSpec.describe ApplicationController::AuthorizationService, type: :controller_se
         expect(perform).to be_a(Service::UnauthorizedResult)
       end
 
-      it 'indicates the algorithm was incorrect' do
-        expect(perform.errors).to eq(['Expected a different algorithm'])
+      it 'returns a generic error' do
+        expect(perform.errors).to eq(['Authorization failed'])
       end
 
       it 'logs the error' do
@@ -119,8 +119,8 @@ RSpec.describe ApplicationController::AuthorizationService, type: :controller_se
         expect(perform).to be_a(Service::UnauthorizedResult)
       end
 
-      it 'sets the error' do
-        expect(perform.errors).to eq(["Could not find public key for kid #{kid}"])
+      it 'returns a generic error' do
+        expect(perform.errors).to eq(['Authorization failed'])
       end
 
       it 'logs the error' do
@@ -143,8 +143,8 @@ RSpec.describe ApplicationController::AuthorizationService, type: :controller_se
         expect(perform).to be_a(Service::UnauthorizedResult)
       end
 
-      it 'sets the error message' do
-        expect(perform.errors).to eq(['Signature has expired'])
+      it 'returns a generic error' do
+        expect(perform.errors).to eq(['Authorization failed'])
       end
 
       it 'logs the error' do
@@ -167,8 +167,8 @@ RSpec.describe ApplicationController::AuthorizationService, type: :controller_se
         expect(perform).to be_a(Service::UnauthorizedResult)
       end
 
-      it 'sets the error' do
-        expect(perform.errors).to eq(['Issuing time must be in the past'])
+      it 'returns a generic error' do
+        expect(perform.errors).to eq(['Authorization failed'])
       end
 
       it 'logs the error' do
@@ -191,8 +191,8 @@ RSpec.describe ApplicationController::AuthorizationService, type: :controller_se
         expect(perform).to be_a(Service::UnauthorizedResult)
       end
 
-      it 'sets the error' do
-        expect(perform.errors).to eq(['Invalid issuer. Expected ["https://securetoken.google.com/skyrim-inventory-management-v2"], received https://securetoken.google.com/somevalue'])
+      it 'returns a generic error' do
+        expect(perform.errors).to eq(['Authorization failed'])
       end
 
       it 'logs the error' do
@@ -215,9 +215,9 @@ RSpec.describe ApplicationController::AuthorizationService, type: :controller_se
         expect(perform).to be_a(Service::UnauthorizedResult)
       end
 
-      it 'sets the error' do
+      it 'returns a generic error' do
         expect(perform.errors)
-          .to eq(['Invalid issuer. Expected ["https://securetoken.google.com/skyrim-inventory-management-v2"], received invalidvalue'])
+          .to eq(['Authorization failed'])
       end
 
       it 'logs the error' do
@@ -240,8 +240,8 @@ RSpec.describe ApplicationController::AuthorizationService, type: :controller_se
         expect(perform).to be_a(Service::UnauthorizedResult)
       end
 
-      it 'sets the error' do
-        expect(perform.errors).to eq(['Sub value is missing or blank'])
+      it 'returns a generic error' do
+        expect(perform.errors).to eq(['Authorization failed'])
       end
 
       it 'logs the error' do
@@ -264,8 +264,8 @@ RSpec.describe ApplicationController::AuthorizationService, type: :controller_se
         expect(perform).to be_a(Service::UnauthorizedResult)
       end
 
-      it 'sets the error' do
-        expect(perform.errors).to eq(['Auth time must be in the past'])
+      it 'returns a generic error' do
+        expect(perform.errors).to eq(['Authorization failed'])
       end
 
       it 'logs the error' do
@@ -288,8 +288,8 @@ RSpec.describe ApplicationController::AuthorizationService, type: :controller_se
         expect(perform).to be_a(Service::UnauthorizedResult)
       end
 
-      it 'sets the error' do
-        expect(perform.errors).to eq(['Email is missing or blank'])
+      it 'returns a generic error' do
+        expect(perform.errors).to eq(['Authorization failed'])
       end
 
       it 'logs the error' do

@@ -58,20 +58,20 @@ Response when the user has playthroughs:
 ```json
 [
   {
-    "id": 335,
-    "user_id": 2301,
-    "name": "My Playthrough 1",
-    "description": "My first playthrough",
-    "created_at": "Thu, 17 Jun 2021 11:59:16.891338000 UTC +00:00",
-    "updated_at": "Thu, 17 Jun 2021 11:59:16.891338000 UTC +00:00"
-  },
-  {
     "id": 822,
     "user_id": 2301,
     "name": "My Playthrough 2",
     "description": "My second playthrough",
-    "created_at": "Mon, 21 Jun 2021 02:36:27.173881000 UTC +00:00",
-    "updated_at": "Mon, 21 Jun 2021 02:36:27.173881000 UTC +00:00"
+    "created_at": "Mon, 21 Jun 2026 02:36:27.173881000 UTC +00:00",
+    "updated_at": "Mon, 21 Jun 2026 02:36:27.173881000 UTC +00:00"
+  },
+  {
+    "id": 335,
+    "user_id": 2301,
+    "name": "My Playthrough 1",
+    "description": "My first playthrough",
+    "created_at": "Thu, 17 Jun 2026 11:59:16.891338000 UTC +00:00",
+    "updated_at": "Thu, 17 Jun 2026 11:59:16.891338000 UTC +00:00"
   }
 ]
 ```

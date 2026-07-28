@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  has_many :playthroughs, dependent: :destroy
+
   validates :uid,
             presence: true,
             uniqueness: {

@@ -13,5 +13,20 @@ FactoryBot.define do
       uid { 'somestring' }
       email { 'someuser@gmail.com' }
     end
+
+    factory :user_with_playthroughs do
+      transient do
+        playthrough_count { 2 }
+      end
+
+      after(:create) do |user, evaluator|
+        create_list(:playthrough, evaluator.playthrough_count, user:)
+      end
+
+      factory :authenticated_user_with_playthroughs do
+        uid { 'somestring' }
+        email { 'someuser@gmail.com' }
+      end
+    end
   end
 end

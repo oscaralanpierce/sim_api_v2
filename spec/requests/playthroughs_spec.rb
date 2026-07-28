@@ -11,7 +11,7 @@ RSpec.describe 'Playthroughs', type: :request do
   end
 
   describe 'POST /playthroughs' do
-    subject(:create_playthrough) { post '/playthroughs', headers:, params: }
+    subject(:create_playthrough) { post playthroughs_path, headers:, params: }
 
     let!(:user) { create(:authenticated_user) }
 

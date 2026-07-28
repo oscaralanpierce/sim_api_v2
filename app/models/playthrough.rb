@@ -12,6 +12,8 @@ class Playthrough < ApplicationRecord
 
   before_validation :set_name
 
+  scope :index_order, -> { order(updated_at: :desc) }
+
   private
 
   def set_name

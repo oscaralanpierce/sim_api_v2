@@ -114,7 +114,7 @@ RSpec.describe 'Playthroughs', type: :request do
         stub_successful_login
       end
 
-      context 'when the playthrough exists' do
+      context 'when the playthrough exists and belongs to the logged-in user' do
         let!(:playthrough) { create(:playthrough, user:) }
 
         it 'deletes the playthrough' do

@@ -6,12 +6,10 @@ module Service
 
     attr_reader :errors
 
-    def initialize(options = {})
-      raise InvalidErrorResult.new('No error(s) passed in') unless options[:error].present? || options[:errors].present?
+    def initialize(errors)
+      raise InvalidErrorResult.new('No error(s) passed in') if errors.blank?
 
-      @errors = options[:errors] || []
-      @errors << options[:error] if options.has_key?(:error)
-      @errors.flatten!
+      @errors = Array.wrap(errors)
     end
 
     def status

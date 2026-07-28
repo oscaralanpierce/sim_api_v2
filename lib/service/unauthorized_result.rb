@@ -6,8 +6,8 @@ module Service
   class UnauthorizedResult < ErrorResult
     UNAUTHORIZED_MESSAGE = 'Authorization failed'
 
-    def initialize(_options = {})
-      super(error: UNAUTHORIZED_MESSAGE)
+    def initialize(_errors = nil)
+      super(UNAUTHORIZED_MESSAGE)
     end
 
     def status

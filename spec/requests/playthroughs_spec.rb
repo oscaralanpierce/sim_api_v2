@@ -189,7 +189,7 @@ RSpec.describe 'Playthroughs', type: :request do
 
         it 'returns the error message' do
           destroy_playthrough
-          expect(response.body).to eq({ errors: ['Oh no!'] }.to_json)
+          expect(response.body).to eq({ errors: ['StandardError: Oh no!'] }.to_json)
         end
 
         it 'logs the error' do

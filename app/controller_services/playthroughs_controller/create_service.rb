@@ -20,12 +20,12 @@ class PlaythroughsController < ApplicationController
       if playthrough.save
         Service::CreatedResult.new(playthrough)
       else
-        Service::UnprocessableEntityResult.new(errors: playthrough.errors_array)
+        Service::UnprocessableEntityResult.new(playthrough.errors_array)
       end
     rescue StandardError => e
       Rails.logger.error("An unexpected #{e.class} occurred: #{e.message}")
 
-      Service::InternalServerErrorResult.new(error: e.message)
+      Service::InternalServerErrorResult.new("#{e.class}: #{e.message}")
     end
 
     private

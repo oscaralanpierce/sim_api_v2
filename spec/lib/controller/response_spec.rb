@@ -58,7 +58,7 @@ RSpec.describe Controller::Response do
       let(:controller) { instance_double(TestController, render: nil) }
       let(:error) { 'Not Found' }
       let(:options) { {} }
-      let(:result) { Service::NotFoundResult.new(error:) }
+      let(:result) { Service::NotFoundResult.new(error) }
 
       it 'renders the errors with the result status' do
         execute

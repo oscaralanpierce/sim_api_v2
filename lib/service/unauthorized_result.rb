@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'service/result'
+require 'service/error_result'
 
 module Service
-  class UnauthorizedResult < Result
+  class UnauthorizedResult < ErrorResult
     UNAUTHORIZED_MESSAGE = 'Authorization failed'
 
     def initialize(_options = {})

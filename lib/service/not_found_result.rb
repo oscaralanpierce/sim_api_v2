@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'service/result'
+require 'service/error_result'
 
 module Service
-  class NotFoundResult < Result
+  class NotFoundResult < ErrorResult
     def status
       :not_found
     end

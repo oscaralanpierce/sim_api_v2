@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'service/result'
+require 'service/success_result'
 
 module Service
-  class NoContentResult < Result
+  class NoContentResult < SuccessResult
     def status
       :no_content
     end

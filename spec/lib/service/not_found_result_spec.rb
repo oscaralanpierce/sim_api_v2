@@ -3,7 +3,7 @@
 require 'service/not_found_result'
 
 RSpec.describe Service::NotFoundResult do
-  subject(:result) { described_class.new({}) }
+  subject(:result) { described_class.new({ error: 'Resource not found' }) }
 
   describe '#status' do
     it 'is :not_found' do

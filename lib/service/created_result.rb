@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'service/result'
+require 'service/success_result'
 
 module Service
-  class CreatedResult < Result
+  class CreatedResult < SuccessResult
     def status
       :created
     end

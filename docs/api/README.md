@@ -10,6 +10,8 @@ Currently, the V2 API offers only a single health-check endpoint. This endpoint 
 
 Note that the `User` model is not exposed as a RESTful resource because Google is the source of truth for profile data on the front end.
 
+- [Playthroughs](/docs/api/resources/playthroughs.md)
+
 ## Other Docs
 
 - [Authentication](/docs/api/authentication.md)

@@ -4,7 +4,7 @@ Playthroughs represent playthroughs belonging to the [logged-in user](/docs/api/
 
 ## Table of Contents
 
-- [POST /playthroughs](#post-playthroughs)
+- [GET /playthroughs](#get-playthroughs)
   - [Example Requests](#example-requests)
   - [Success Responses](#success-responses)
     - [Statuses](#statuses)
@@ -12,7 +12,7 @@ Playthroughs represent playthroughs belonging to the [logged-in user](/docs/api/
   - [Error Responses](#error-responses)
     - [Statuses](#statuses-1)
     - [Example Bodies](#example-bodies-1)
-- [DELETE /playthroughs/:id](#delete-playthroughsid)
+- [POST /playthroughs](#post-playthroughs)
   - [Example Requests](#example-requests-1)
   - [Success Responses](#success-responses-1)
     - [Statuses](#statuses-2)
@@ -20,6 +20,76 @@ Playthroughs represent playthroughs belonging to the [logged-in user](/docs/api/
   - [Error Responses](#error-responses-1)
     - [Statuses](#statuses-3)
     - [Example Bodies](#example-bodies-3)
+- [DELETE /playthroughs/:id](#delete-playthroughsid)
+  - [Example Requests](#example-requests-2)
+  - [Success Responses](#success-responses-2)
+    - [Statuses](#statuses-4)
+    - [Example Bodies](#example-bodies-4)
+  - [Error Responses](#error-responses-2)
+    - [Statuses](#statuses-5)
+    - [Example Bodies](#example-bodies-5)
+
+## GET /playthroughs
+
+Returns all playthroughs for the logged-in user, in descending order of update timestamp (i.e., the most recently updated playthroughs will be returned first).
+
+### Example Requests
+
+```
+GET /playthroughs
+Authorization: Bearer xxxxxxx
+Content-Type: application/json
+```
+
+### Success Responses
+
+#### Statuses
+
+- 200 OK
+
+#### Example Bodies
+
+Response when the user has no playthroughs:
+```json
+[]
+```
+
+Response when the user has playthroughs:
+```json
+[
+  {
+    "id": 822,
+    "user_id": 2301,
+    "name": "My Playthrough 2",
+    "description": "My second playthrough",
+    "created_at": "Mon, 21 Jun 2026 02:36:27.173881000 UTC +00:00",
+    "updated_at": "Mon, 21 Jun 2026 02:36:27.173881000 UTC +00:00"
+  },
+  {
+    "id": 335,
+    "user_id": 2301,
+    "name": "My Playthrough 1",
+    "description": "My first playthrough",
+    "created_at": "Thu, 17 Jun 2026 11:59:16.891338000 UTC +00:00",
+    "updated_at": "Thu, 17 Jun 2026 11:59:16.891338000 UTC +00:00"
+  }
+]
+```
+
+### Error Responses
+
+#### Statuses
+
+- 500 Internal Server Error
+
+#### Example Bodies
+
+500 errors are returned due to unexpected errors and can occur at any point during program execution:
+```json
+{
+  "errors": ["StandardError: Something went wrong"]
+}
+```
 
 ## POST /playthroughs
 

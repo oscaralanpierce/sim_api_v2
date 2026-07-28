@@ -12,6 +12,93 @@ RSpec.describe 'Playthroughs', type: :request do
     }
   end
 
+  describe 'GET /playthroughs' do
+    subject(:get_index) { get(playthroughs_path, headers:) }
+
+    context 'when authenticated' do
+      before do
+        stub_successful_login
+      end
+
+      context 'when the user has playthroughs' do
+        let!(:playthroughs) { create_list(:playthrough, 4, user:) }
+        let!(:excluded_playthrough) { create(:playthrough) }
+
+        before do
+          # Change the expected order
+          playthroughs[2].touch
+        end
+
+        it 'returns status 200' do
+          get_index
+          expect(response.status).to eq(200)
+        end
+
+        it "returns the user's playthroughs in reverse chronological update order" do
+          get_index
+          expect(response.body).to eq(user.playthroughs.order(updated_at: :desc).to_json)
+        end
+
+        it "doesn't return other users' playthroughs" do
+          get_index
+          expect(response.body).not_to include(excluded_playthrough.to_json)
+        end
+      end
+
+      context 'when the user has no playthroughs' do
+        before do
+          create_list(:playthrough, 2) # these shouldn't be included
+        end
+
+        it 'returns status 200' do
+          get_index
+          expect(response.status).to eq(200)
+        end
+
+        it 'returns an empty collection' do
+          get_index
+          expect(response.body).to eq([].to_json)
+        end
+      end
+
+      context 'when an unexpected error occurs' do
+        before do
+          allow(Rails.logger).to receive(:error)
+
+          allow_any_instance_of(User)
+            .to receive(:playthroughs)
+                  .and_raise(StandardError.new('Something went wrong'))
+        end
+
+        it 'returns status 500' do
+          get_index
+          expect(response.status).to eq(500)
+        end
+
+        it 'returns the error class and message' do
+          get_index
+          expect(response.body).to eq({ errors: ['StandardError: Something went wrong'] }.to_json)
+        end
+      end
+    end
+
+    context 'when unauthenticated' do
+      before do
+        stub_failed_login
+      end
+
+      it 'returns status 401' do
+        get_index
+        expect(response.status).to eq(401)
+      end
+
+      it 'returns a generic error' do
+        get_index
+        expect(response.body).to eq({ errors: ['Authorization failed'] }.to_json)
+      end
+    end
+  end
+
   describe 'POST /playthroughs' do
     subject(:create_playthrough) { post playthroughs_path, headers:, params: }
 
@@ -87,7 +174,7 @@ RSpec.describe 'Playthroughs', type: :request do
       end
     end
 
-    context 'when not authenticated' do
+    context 'when unauthenticated' do
       let(:params) { { playthrough: {} }.to_json }
 
       before do

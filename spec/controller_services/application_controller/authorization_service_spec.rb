@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'service/unauthorized_result'
 
-RSpec.describe ApplicationController::AuthorizationService do
+RSpec.describe ApplicationController::AuthorizationService, type: :controller_service do
   describe '#perform' do
     subject(:perform) { described_class.new(controller, access_token).perform }
 

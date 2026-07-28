@@ -41,7 +41,7 @@ RSpec.describe 'Playthroughs', type: :request do
 
         it "doesn't return other users' playthroughs" do
           get_index
-          expect(JSON.parse(response.body)).not_to include(JSON.parse(excluded_playthrough.to_json))
+          expect(response.body).not_to include(excluded_playthrough.to_json)
         end
       end
 

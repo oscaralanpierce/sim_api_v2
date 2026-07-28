@@ -5,11 +5,12 @@ Controller services are a design pattern we use to keep controller logic simple 
 ## Table of Contents
 
 - [Class Structure](#class-structure)
-  - [The `Service::Result` Class](#the-serviceresult-class)
+  - [The `Service::ErrorResult` Class](#the-serviceerrorresult-class)
+    - [The `Service::UnauthorizedResult`](#the-serviceunauthorizedresult)
+  - [The `Service::SuccessResult` Class](#the-servicesuccessresult-class)
   - [The `Controller::Response` Class](#the-controllerresponse-class)
 - [Adding Handlers to an Existing Controller](#adding-handlers-to-an-existing-controller)
 - [Building New Controllers](#building-new-controllers)
-- [The `Service::UnauthorizedResult`](#the-serviceunauthorizedresult)
 
 ## Class Structure
 
@@ -26,7 +27,7 @@ Controller services live in the `/app/controller_services/<controller_name>` dir
       `show_service.rb`
       `update_service.rb`
 
-Controller services are initialized with any params required for the request handling logic, which is then implemented in their `#perform` instance method. This method returns a subclass of `Service::Result` that includes the resource or errors to be returned in the response body.
+Controller services are initialized with any params required for the request handling logic, which is then implemented in their `#perform` instance method. This method returns a subclass of `Service::SuccessResult` (including a resource to be returned in the response body, unless it is a `Service::NoContentResult`) or `Service::ErrorResult` (including any errors to be returned in the response body).
 
 The handler methods within the controller (e.g., `#create`, `#update`, `#show`, `#index`, `#destroy`) instantiate the relevant service and create a `Controller::Response` object with the result returned by its `#perform` method, calling `#execute` on the response object to generate a response to the request:
 
@@ -48,19 +49,27 @@ class WidgetsController < ApplicationController
 end
 ```
 
-### The `Service::Result` Class
+### The `Service::ErrorResult` Class
 
-Controller services return subclasses of `Service::Result` from their `#perform` method. Each subclass, such as `Service::OkResult` or `Service::NotFoundResult`, defines a status and either a resource or errors to be returned in the body. For a `Service::NoContentResult`, the resource and errors are both `nil`.
+Subclasses of `Service::ErrorResult`, such as `Service::NotFoundResult` and `Service::UnprocessableEntityResult` take an options hash that can include an `:errors` array, an `:error` array or string, or both. These are normalised into a flattened `:errors` array that is returned in the response body. If both keys are defined, the value of `:error` is added to the final `:errors` array as well.
 
-Each `Service::Result` subclass defines a `#status` method. This method returns the symbol that Rails uses to indicate a particular server response. For example, `:ok` becomes status 200, `:not_found` becomes status 404, etc. Successful (200-range) results have a `:resource` passed into their constructor; error results have an `:error` string or `:errors` array passed in. If a string is passed in as `:error`, it is normalised to an `:errors` array containing that string on the final result object.
+Each subclass defines a `#status` method. This method returns the symbol that Rails uses to indicate a particular server response. For example, `:unprocessable_entity` becomes status 422, `:not_found` becomes status 404, etc.
+
+#### The `Service::UnauthorizedResult`
+
+The `Service::UnauthorizedResult` class is an important element in the security of the API, and for that reason behaves a little differently from other `Service::ErrorResult` subclasses. Unauthorized results should _never_ return a resource of any kind. They should also always return the same, generic failure message. Giving a specific failure reason, or returning different error messages at different stages in program execution, risks giving an attacker data points to help formulate their next attempt. All a client needs to know about an authorization failure is that authorization has failed. More specific errors, if available, are logged so the application maintainers can further investigate authorization failures.
+
+### The `Service::SuccessResult` Class
+
+Subclasses of `Service::SuccessResult`, such as `Service::OkResult` and `Service::CreatedResult`, take a `resource` that will be returned in the response body, generally an Active Record model or collection. `Service::NoContentResult` instances do not have a resource defined; any resource passed into their constructor will be squashed. If you need a resource, you should not use `Service::NoContentResult`.
 
 ### The `Controller::Response` Class
 
-The `Controller::Response` class is instantiated with a controller instance and a `Service::Result` subclass instance. Its `#execute` method renders the status and response body indicated by the result object from the controller passed in, calling either `#head` (for the `Service::NoContentResult`) or `#render` (for all other result classes) on the controller.
+The `Controller::Response` class is instantiated with a controller instance and a `Service::ErrorResult` or `Service::SuccessResult` subclass instance. Its `#execute` method renders the status and response body indicated by the result object from the controller passed in, calling either `#head` (for the `Service::NoContentResult`) or `#render` (for other result classes) on the controller.
 
 ## Adding Handlers to an Existing Controller
 
-If you want to add a new route, you will need to add a handler to the relevant controller. In order to do this, you should create a controller service in the `/app/controller_services/<some_controller>/` directory with a class name corresponding to the handler. The class is then namespaced under the controller class, in keeping with Zeitwerk requirements. Any data required to handle the request, such as a logged-in user or request params, should be passed into your service's initializer and stored in instance variables. The instance method `#perform` returns whatever `Service::Result` subclasses it may need to handle the request (often a success class like `Service::OkResult` and one or more error subclasses like `Service::NotFoundResult`).
+If you want to add a new route, you will need to add a handler to the relevant controller. In order to do this, you should create a controller service in the `/app/controller_services/<some_controller>/` directory with a class name corresponding to the handler. The class is then namespaced under the controller class, in keeping with Zeitwerk requirements. Any data required to handle the request, such as a logged-in user or request params, should be passed into your service's initializer and stored in instance variables. The instance method `#perform` returns whatever `Service::SuccessResult`/`Service::ErrorResult` subclasses it may need to handle the request (often a success class like `Service::OkResult` and one or more error classes like `Service::NotFoundResult`).
 
 ```ruby
 import 'service/ok_result'
@@ -98,7 +107,3 @@ end
 ## Building New Controllers
 
 When creating a new controller, such as when you've introduced a new RESTful resource, you will need to create the controller class in `/app/controllers/` and any controller services it may use in `/app/controller_services/<your_controller>/`. There should be one service class per route handler in the controller. You can define each controller service in the manner described above.
-
-## The `Service::UnauthorizedResult`
-
-The `Service::UnauthorizedResult` class is an important element in the security of the API, and for that reason behaves a little differently from other `Service::Result` subclasses. Unauthorized results should _never_ return a resource of any kind. They should also always return the same, generic failure message. Giving a specific failure reason, or returning different error messages at different stages in program execution, risks giving an attacker data points to help formulate their next attempt. All a client needs to know about an authorization failure is that authorization has failed. More specific errors, if available, are logged so the application maintainers can further investigate authorization failures.

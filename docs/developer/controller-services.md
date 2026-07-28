@@ -51,7 +51,7 @@ end
 
 ### The `Service::ErrorResult` Class
 
-Subclasses of `Service::ErrorResult`, such as `Service::NotFoundResult` and `Service::UnprocessableEntityResult` take an options hash that can include an `:errors` array, an `:error` array or string, or both. These are normalised into a flattened `:errors` array that is returned in the response body. If both keys are defined, the value of `:error` is added to the final `:errors` array as well.
+Subclasses of `Service::ErrorResult`, such as `Service::NotFoundResult` and `Service::UnprocessableEntityResult` take an error message or array of error messages as a constructor param. These are normalised into a flattened `:errors` array that is returned in the response body.
 
 Each subclass defines a `#status` method. This method returns the symbol that Rails uses to indicate a particular server response. For example, `:unprocessable_entity` becomes status 422, `:not_found` becomes status 404, etc.
 

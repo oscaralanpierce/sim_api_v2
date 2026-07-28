@@ -75,7 +75,7 @@ RSpec.describe PlaythroughsController::CreateService, type: :controller_service 
     end
 
     it 'sets an error message' do
-      expect(perform.errors).to eq(['User must be logged in'])
+      expect(perform.errors).to eq(['Authorization failed'])
     end
 
     it 'logs an error' do

@@ -13,11 +13,7 @@ class PlaythroughsController < ApplicationController
     end
 
     def perform
-      if !user.is_a?(User)
-        Rails.logger.error('Unexpected state: PlaythroughsController::CreateService called with no logged-in user')
-
-        return Service::UnauthorizedResult.new({ error: 'User must be logged in' })
-      end
+      return log_and_return_unauthorized unless user.is_a?(User)
 
       playthrough = user.playthroughs.new(params)
 
@@ -35,5 +31,11 @@ class PlaythroughsController < ApplicationController
     private
 
     attr_reader :user, :params
+
+    def log_and_return_unauthorized
+      Rails.logger.error('Unexpected state: PlaythroughsController::CreateService called with no logged-in user')
+
+      Service::UnauthorizedResult.new({ error: 'Authorization failed' })
+    end
   end
 end

@@ -18,11 +18,11 @@ class PlaythroughsController < ApplicationController
       playthrough.destroy!
       Service::NoContentResult.new
     rescue ActiveRecord::RecordNotFound
-      Service::NotFoundResult.new(error: 'Playthrough not found')
+      Service::NotFoundResult.new('Playthrough not found')
     rescue StandardError => e
       Rails.logger.error("An unexpected #{e.class} occurred: #{e.message}")
 
-      Service::InternalServerErrorResult.new(error: e.message)
+      Service::InternalServerErrorResult.new("#{e.class}: #{e.message}")
     end
 
     private

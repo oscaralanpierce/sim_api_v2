@@ -102,7 +102,7 @@ RSpec.describe PlaythroughsController::CreateService, type: :controller_service 
     end
 
     it 'sets the error message' do
-      expect(perform.errors).to eq(['Oh no!'])
+      expect(perform.errors).to eq(['StandardError: Oh no!'])
     end
 
     it 'logs the error' do

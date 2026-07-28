@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'service/error_result'
+
 module Controller
   class Response
     def initialize(controller, result, options = {})
@@ -9,12 +11,12 @@ module Controller
     end
 
     def execute
-      if result.errors.blank? && result.resource.nil?
-        controller.head result.status
-      elsif result.errors.blank?
-        controller.render json: result.resource, status: result.status
-      else
+      if result.is_a?(Service::ErrorResult)
         controller.render json: { errors: result.errors }, status: result.status
+      elsif result.resource.nil?
+        controller.head result.status
+      else
+        controller.render json: result.resource, status: result.status
       end
     end
 

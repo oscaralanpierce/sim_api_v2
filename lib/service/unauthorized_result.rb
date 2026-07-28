@@ -7,7 +7,7 @@ module Service
     UNAUTHORIZED_MESSAGE = 'Authorization failed'
 
     def initialize(_options = {})
-      super({ error: UNAUTHORIZED_MESSAGE })
+      super(error: UNAUTHORIZED_MESSAGE)
     end
 
     def status

@@ -9,6 +9,7 @@ Controller services are a design pattern we use to keep controller logic simple 
   - [The `Controller::Response` Class](#the-controllerresponse-class)
 - [Adding Handlers to an Existing Controller](#adding-handlers-to-an-existing-controller)
 - [Building New Controllers](#building-new-controllers)
+- [The `Service::UnauthorizedResult`](#the-serviceunauthorizedresult)
 
 ## Class Structure
 
@@ -97,3 +98,7 @@ end
 ## Building New Controllers
 
 When creating a new controller, such as when you've introduced a new RESTful resource, you will need to create the controller class in `/app/controllers/` and any controller services it may use in `/app/controller_services/<your_controller>/`. There should be one service class per route handler in the controller. You can define each controller service in the manner described above.
+
+## The `Service::UnauthorizedResult`
+
+The `Service::UnauthorizedResult` class is an important element in the security of the API, and for that reason behaves a little differently from other `Service::Result` subclasses. Unauthorized results should _never_ return a resource of any kind. They should also always return the same, generic failure message. Giving a specific failure reason, or returning different error messages at different stages in program execution, risks giving an attacker data points to help formulate their next attempt. All a client needs to know about an authorization failure is that authorization has failed. More specific errors, if available, are logged so the application maintainers can further investigate authorization failures.

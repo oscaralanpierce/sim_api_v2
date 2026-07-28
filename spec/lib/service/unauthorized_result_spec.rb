@@ -3,7 +3,19 @@
 require 'service/unauthorized_result'
 
 RSpec.describe Service::UnauthorizedResult do
-  subject(:result) { described_class.new({}) }
+  subject(:result) { described_class.new(options) }
+
+  let(:options) { { resource: 'This should not be present', error: 'This should be generic' } }
+
+  describe 'resource and errors' do
+    it 'ignores passed-in options and sets resource to nil' do
+      expect(result.resource).to be_nil
+    end
+
+    it 'ignores passed-in options and sets a generic error message' do
+      expect(result.errors).to eq(['Authorization failed'])
+    end
+  end
 
   describe '#status' do
     it 'is :unauthorized' do

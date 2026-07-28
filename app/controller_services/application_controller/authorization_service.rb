@@ -23,7 +23,7 @@ class ApplicationController < ActionController::API
       nil
     rescue JWT::DecodeError, InvalidDataError => e
       Rails.logger.error("#{e.class} while validating user access token: #{e.message}")
-      Service::UnauthorizedResult.new(error: 'Authorization failed')
+      Service::UnauthorizedResult.new
     end
 
     private

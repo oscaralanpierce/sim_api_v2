@@ -16,7 +16,7 @@ Skyrim Inventory Management V2 is a fully-featured, distributed-stack Rails/Reac
 
 ## Disclaimer
 
-This application is my hobby project intended for my personal use. There are no admin users to fix anything you break and the design of the application doesn't accommodate anyone's preferences or playing style but my own. _Caveat emptor._ 
+This application is my hobby project intended for my personal use. There are no admin users to fix anything you break and the design of the application doesn't accommodate anyone's preferences or playing style but my own. _Caveat emptor._
 
 ## Developer Info
 
@@ -25,7 +25,7 @@ This application is my hobby project intended for my personal use. There are no 
 The Skyrim Inventory Management V2 API is a basic Rails API running on Rails 8 and Ruby 4. This API is simpler than the [V1 API](https://github.com/oscaralanpierce/skyrim_inventory_management) and will function as an ERP ledgering app. You will need the following free software installed to run the API server in your local environment:
 
 - [PostgreSQL 18](https://www.postgresql.org/)
-- [asdf](https://asdf-vm.com) 
+- [asdf](https://asdf-vm.com)
 - The Ruby version specified in [.tool-versions](./.tool-versions)
 
 You can set up your dev environment by cloning the repo, `cd`ing into the directory, and running:
@@ -95,7 +95,7 @@ You can also use the Rubocop script in this repo to run against staged changes. 
 
 ### Workflows
 
-We use [Trello](https://trello.com/b/Jo7Z3oUh/sim-project-board) to track work for both SIM applications. To work on an issue, first check out a branch for your dev work and do the work on that branch. The branch naming convention we use is `<issue-number>-descriptive-name`, where the issue number is the number assigned to the card by Trello. For example, a branch might be called `622-configure-dependabot`. 
+We use [Trello](https://trello.com/b/Jo7Z3oUh/sim-project-board) to track work for both SIM applications. To work on an issue, first check out a branch for your dev work and do the work on that branch. The branch naming convention we use is `<issue-number>-descriptive-name`, where the issue number is the number assigned to the card by Trello. For example, a branch might be called `622-configure-dependabot`.
 
 When you have completed your work, push to GitHub and open a pull request. The pull request should link to the Trello card as well as providing context, a summary of changes, and an explanation for any design choices you made or anything that might not make sense to a reviewer or future developer looking at Git history. Link to the PR in the Trello card and move the card to reviewing. Once your PR has been approved and CI has passed, you are free to merge.
 
@@ -114,3 +114,5 @@ Render offers SSH access to troubleshoot production issues. More information is 
 ## License
 
 Skyrim Inventory Management is proudly licensed under the [Hippocratic License](https://firstdonoharm.dev). This open-source license restricts use of source code by organizations or users whose usage maintainers consider unethical. This project uses the full (most restrictive) version of the license, with provisions on ecocide, human trafficking and slavery, genocide, mass surveillance, and other unethical activities.
+
+Pursuant to the above, the maintainers specify that we do not authorize our code to be used by (without limitation) the US military, US Immigration and Customs Enforcement (ICE), the Israeli Defense Force (IDF), or any organisations that have contracts with the above.

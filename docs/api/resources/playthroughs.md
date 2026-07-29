@@ -20,7 +20,7 @@ Playthroughs represent playthroughs belonging to the [logged-in user](/docs/api/
   - [Error Responses](#error-responses-1)
     - [Statuses](#statuses-3)
     - [Example Bodies](#example-bodies-3)
-- [DELETE /playthroughs/:id](#delete-playthroughsid)
+- [PATCH|PUT /playthroughs/:id](#patchput-playthroughsid)
   - [Example Requests](#example-requests-2)
   - [Success Responses](#success-responses-2)
     - [Statuses](#statuses-4)
@@ -28,6 +28,14 @@ Playthroughs represent playthroughs belonging to the [logged-in user](/docs/api/
   - [Error Responses](#error-responses-2)
     - [Statuses](#statuses-5)
     - [Example Bodies](#example-bodies-5)
+- [DELETE /playthroughs/:id](#delete-playthroughsid)
+  - [Example Requests](#example-requests-3)
+  - [Success Responses](#success-responses-3)
+    - [Statuses](#statuses-6)
+    - [Example Bodies](#example-bodies-6)
+  - [Error Responses](#error-responses-2)
+    - [Statuses](#statuses-7)
+    - [Example Bodies](#example-bodies-7)
 
 ## GET /playthroughs
 
@@ -140,8 +148,8 @@ Content-Type: application/json
   "user_id": 20082,
   "name": "My Playthrough 1",
   "description": "This could also be null",
-  "created_at": "Thu, 17 Jun 2021 11:59:16.891338000 UTC +00:00",
-  "updated_at": "Thu, 17 Jun 2021 11:59:16.891338000 UTC +00:00"
+  "created_at": "Thu, 17 Jun 2026 11:59:16.891338000 UTC +00:00",
+  "updated_at": "Thu, 17 Jun 2026 11:59:16.891338000 UTC +00:00"
 }
 ```
 
@@ -165,6 +173,79 @@ A 500 error will be returned only when an unanticipated error is raised. Because
 ```json
 {
   "errors": ["Something went horribly wrong"]
+}
+```
+
+## PATCH|PUT /playthroughs/:id
+
+Updates the playthrough with the given `id`, provided it exists and belongs to the authenticated user. This endpoint accepts both `PUT` and `PATCH` requests, which are handled identically by updating an existing object in the database.
+
+### Example Requests
+
+With `PATCH`:
+```
+PATCH /playthroughs/22
+{ "playthrough": { "name": "New name", "description": { "New description" } } }
+Authorization: Bearer xxxxxxx
+Content-Type: application/json
+```
+
+With `PUT`:
+```
+PUT /playthroughs/22
+{ "playthrough": { "name": "New name", "description": { "New description" } } }
+Authorization: Bearer xxxxxxx
+Content-Type: application/json
+```
+
+### Success Responses
+
+#### Statuses
+
+- 200 OK
+
+#### Example Bodies
+
+A successful update will return the playthrough requested:
+```json
+{
+  "id": 83226,
+  "user_id": 20082,
+  "name": "New Name",
+  "description": "New description",
+  "created_at": "Thu, 17 Jun 2026 11:59:16.891338000 UTC +00:00",
+  "updated_at": "Thu, 17 Jun 2026 11:59:16.891338000 UTC +00:00"
+}
+```
+
+### Error Responses
+
+#### Statuses
+
+- 404 Not Found
+- 422 Unprocessable Entity
+- 500 Internal Server Error
+
+#### Example Bodies
+
+A 404 response will be returned when the playthrough identified by the `id` does not exist or does not belong to the logged-in user.
+```json
+{
+  "errors": ["Playthrough not found"]
+}
+```
+
+A 422 response will be returned when the playthrough is not able to be updated due to one or more invalid attributes in the params passed in. This response means the playthrough was not updated with the new values (even if there were valid values among the invalid ones). The errors returned reflect the validation errors or database constraints failed:
+```json
+{
+  "errors": ["Name must be unique"]
+}
+```
+
+A 500 response will be returned when an unexpected error occurs at some point during program execution. Because the error is unexpected and can occur at any time, a 500 response does not clearly indicate whether a playthrough was updated or not:
+```json
+{
+  "errors": ["Something went wrong"]
 }
 ```
 

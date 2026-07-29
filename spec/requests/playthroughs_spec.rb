@@ -193,6 +193,252 @@ RSpec.describe 'Playthroughs', type: :request do
     end
   end
 
+  describe 'PUT /playthroughs/:id' do
+    subject(:update_playthrough) { put(playthrough_path(playthrough.id), headers:, params:) }
+
+    let!(:user) { create(:authenticated_user_with_playthroughs) }
+    let(:playthrough) { user.playthroughs.first }
+    let(:params) { { playthrough: { description: 'New description' } }.to_json }
+
+    context 'when authenticated' do
+      before do
+        stub_successful_login
+      end
+
+      context 'when the playthrough exists and belongs to the user' do
+        context 'when the playthrough is able to be updated' do
+          it 'updates the playthrough' do
+            update_playthrough
+            expect(playthrough.reload.description).to eq('New description')
+          end
+
+          it 'returns status 200' do
+            update_playthrough
+            expect(response.status).to eq(200)
+          end
+
+          it 'returns the playthrough' do
+            update_playthrough
+            expect(JSON.parse(response.body)).to eq(JSON.parse(playthrough.reload.to_json))
+          end
+        end
+
+        context 'when the params are invalid' do
+          let(:params) { { playthrough: { name: user.playthroughs.last.name } }.to_json }
+
+          it "doesn't update the playthrough" do
+            expect { update_playthrough }
+              .not_to(change { playthrough.reload.attributes })
+          end
+
+          it 'returns status 422' do
+            update_playthrough
+            expect(response.status).to eq(422)
+          end
+
+          it 'returns the validation errors' do
+            update_playthrough
+            expect(response.body).to eq({ errors: ['Name must be unique'] }.to_json)
+          end
+        end
+      end
+
+      context "when the playthrough exists but doesn't belong to the user" do
+        let(:playthrough) { create(:playthrough) }
+
+        it 'returns status 404' do
+          update_playthrough
+          expect(response.status).to eq(404)
+        end
+
+        it 'returns a generic "Not Found" message' do
+          update_playthrough
+          expect(response.body).to eq({ errors: ['Playthrough not found'] }.to_json)
+        end
+      end
+
+      context "when the playthrough doesn't exist" do
+        let(:playthrough) { double('playthrough', id: 727) }
+
+        it 'returns status 404' do
+          update_playthrough
+          expect(response.status).to eq(404)
+        end
+
+        it 'returns a generic "Not Found" message' do
+          update_playthrough
+          expect(response.body).to eq({ errors: ['Playthrough not found'] }.to_json)
+        end
+      end
+
+      context 'when there is an unexpected error' do
+        before do
+          allow(Rails.logger).to receive(:error)
+
+          allow_any_instance_of(Playthrough)
+            .to receive(:update!).and_raise(StandardError.new('oh noes'))
+        end
+
+        it 'returns status 500' do
+          update_playthrough
+          expect(response.status).to eq(500)
+        end
+
+        it 'returns the error message' do
+          update_playthrough
+          expect(response.body).to eq({ errors: ['StandardError: oh noes'] }.to_json)
+        end
+
+        it 'logs the error' do
+          update_playthrough
+
+          expect(Rails.logger)
+            .to have_received(:error)
+                  .with('An unexpected StandardError occurred: oh noes')
+        end
+      end
+    end
+
+    context 'when unauthenticated' do
+      before do
+        stub_failed_login
+      end
+
+      it "doesn't update the playthrough" do
+        update_playthrough
+        expect(playthrough.reload.description).to be_nil
+      end
+
+      it 'returns status 401' do
+        update_playthrough
+        expect(response.status).to eq(401)
+      end
+    end
+  end
+
+  describe 'PATCH /playthroughs/:id' do
+    subject(:update_playthrough) { patch(playthrough_path(playthrough.id), headers:, params:) }
+
+    let!(:user) { create(:authenticated_user_with_playthroughs) }
+    let(:playthrough) { user.playthroughs.first }
+    let(:params) { { playthrough: { description: 'New description' } }.to_json }
+
+    context 'when authenticated' do
+      before do
+        stub_successful_login
+      end
+
+      context 'when the playthrough exists and belongs to the user' do
+        context 'when the playthrough is able to be updated' do
+          it 'updates the playthrough' do
+            update_playthrough
+            expect(playthrough.reload.description).to eq('New description')
+          end
+
+          it 'returns status 200' do
+            update_playthrough
+            expect(response.status).to eq(200)
+          end
+
+          it 'returns the playthrough' do
+            update_playthrough
+            expect(JSON.parse(response.body)).to eq(JSON.parse(playthrough.reload.to_json))
+          end
+        end
+
+        context 'when the params are invalid' do
+          let(:params) { { name: user.playthroughs.last.name }.to_json }
+
+          it "doesn't update the playthrough" do
+            expect { update_playthrough }
+              .not_to(change { playthrough.reload.attributes })
+          end
+
+          it 'returns status 422' do
+            update_playthrough
+            expect(response.status).to eq(422)
+          end
+
+          it 'returns the validation errors' do
+            update_playthrough
+            expect(response.body).to eq({ errors: ['Name must be unique'] }.to_json)
+          end
+        end
+      end
+
+      context "when the playthrough exists but doesn't belong to the user" do
+        let(:playthrough) { create(:playthrough) }
+
+        it 'returns status 404' do
+          update_playthrough
+          expect(response.status).to eq(404)
+        end
+
+        it 'returns a generic "Not Found" message' do
+          update_playthrough
+          expect(response.body).to eq({ errors: ['Playthrough not found'] }.to_json)
+        end
+      end
+
+      context "when the playthrough doesn't exist" do
+        let(:playthrough) { double('playthrough', id: 727) }
+
+        it 'returns status 404' do
+          update_playthrough
+          expect(response.status).to eq(404)
+        end
+
+        it 'returns a generic "Not Found" message' do
+          update_playthrough
+          expect(response.body).to eq({ errors: ['Playthrough not found'] }.to_json)
+        end
+      end
+
+      context 'when there is an unexpected error' do
+        before do
+          allow(Rails.logger).to receive(:error)
+
+          allow_any_instance_of(Playthrough)
+            .to receive(:update!).and_raise(StandardError.new('oh noes'))
+        end
+
+        it 'returns status 500' do
+          update_playthrough
+          expect(response.status).to eq(500)
+        end
+
+        it 'returns the error message' do
+          update_playthrough
+          expect(response.body).to eq({ errors: ['StandardError: oh noes'] }.to_json)
+        end
+
+        it 'logs the error' do
+          update_playthrough
+
+          expect(Rails.logger)
+            .to have_received(:error)
+                  .with('An unexpected StandardError occurred: oh noes')
+        end
+      end
+    end
+
+    context 'when unauthenticated' do
+      before do
+        stub_failed_login
+      end
+
+      it "doesn't update the playthrough" do
+        expect { update_playthrough }
+          .not_to(change { playthrough.reload.description })
+      end
+
+      it 'returns status 401' do
+        update_playthrough
+        expect(response.status).to eq(401)
+      end
+    end
+  end
+
   describe 'DELETE /playthroughs/:id' do
     subject(:destroy_playthrough) { delete(playthrough_path(playthrough.id), headers:) }
 

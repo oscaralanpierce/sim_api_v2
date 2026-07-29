@@ -38,7 +38,7 @@ RSpec.describe PlaythroughsController::UpdateService, type: :controller_service 
 
         it "doesn't update the playthrough" do
           expect { perform }
-            .not_to change(playthrough.reload, :name)
+            .not_to(change { playthrough.reload.name })
         end
 
         it 'returns a Service::UnprocessableEntityResult' do
@@ -57,7 +57,7 @@ RSpec.describe PlaythroughsController::UpdateService, type: :controller_service 
 
       it "doesn't update the playthrough" do
         expect { perform }
-          .not_to change(playthrough.reload, :description)
+          .not_to(change { playthrough.reload.description })
       end
 
       it 'returns a Service::NotFoundResult' do

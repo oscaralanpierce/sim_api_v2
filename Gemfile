@@ -12,7 +12,7 @@ gem 'pg', '~> 1.1'
 gem 'puma', '>= 5.0'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '~> 1.24', require: false
+gem 'bootsnap', '~> 1.25', require: false
 
 # Use jwt to validate Google authentication tokens prior to calling
 # the Google auth API

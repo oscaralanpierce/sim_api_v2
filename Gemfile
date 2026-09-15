@@ -16,7 +16,7 @@ gem 'bootsnap', '~> 1.26', require: false
 
 # Use jwt to validate Google authentication tokens prior to calling
 # the Google auth API
-gem 'jwt', '~> 3.2.0'
+gem 'jwt', '~> 3.3.0'
 
 # Use Faraday to make third-party API calls
 gem 'faraday', '~> 2.14.3'

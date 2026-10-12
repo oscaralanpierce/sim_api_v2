@@ -38,7 +38,7 @@ group :development, :test do
   gem 'rubocop-rspec', '~> 3.10.2'
 
   # Use rubocop-rspec_rails for more specific linting rules
-  gem 'rubocop-rspec_rails', '2.32.0'
+  gem 'rubocop-rspec_rails', '2.33.0'
 
   # Use rubocop-factory_bot for linting factories
   gem 'rubocop-factory_bot', '~> 2.28.0'

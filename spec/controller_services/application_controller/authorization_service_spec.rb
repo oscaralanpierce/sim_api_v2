@@ -127,7 +127,7 @@ RSpec.describe ApplicationController::AuthorizationService, type: :controller_se
         perform
         expect(Rails.logger)
           .to have_received(:error)
-                .with("JWT::DecodeError while validating user access token: Could not find public key for kid #{kid}")
+                .with("JWT::SignatureError while validating user access token: Could not find public key for kid #{kid}")
       end
     end
 

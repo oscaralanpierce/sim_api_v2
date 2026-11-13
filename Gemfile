@@ -44,7 +44,7 @@ group :development, :test do
   gem 'rubocop-factory_bot', '~> 2.28.0'
 
   # Test with RSpec
-  gem 'rspec-rails', '~> 8.0.4'
+  gem 'rspec-rails', '~> 8.1.0'
 
   # User factory_bot factories for test data
   gem 'factory_bot_rails', '~> 6.5.1'
